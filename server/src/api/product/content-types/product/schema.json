@@ -22,7 +22,8 @@
       "type": "integer"
     },
     "barcode": {
-      "type": "string"
+      "type": "string",
+      "unique": true
     },
     "description": {
       "type": "text"
