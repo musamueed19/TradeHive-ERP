@@ -9,6 +9,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import axios from "axios";
 
 export function RegisterForm({ className, ...props }) {
   // router
@@ -18,7 +19,6 @@ export function RegisterForm({ className, ...props }) {
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
-    username: "",
     firstName: "",
     lastName: "",
   });
@@ -41,19 +41,58 @@ export function RegisterForm({ className, ...props }) {
 
     // login functionality
     // Here...
-    const res = await signIn("credentials", {
-      redirect: false,
-      ...loginData,
-    });
 
-    if (res?.ok) {
-      toast.success("Login Successfully.");
-      router.push("/dashboard");
-      console.log(res);
-    } else {
-      toast.error(res?.error || "Login Failed.");
-      console.log(res);
+    try {
+      // Step 1: Register with only email/username/password
+      const registerRes = await axios.post(
+        `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/auth/local/register`,
+        {
+          username: loginData.email,
+          email: loginData.email,
+          password: loginData.password,
+        }
+      );
+
+      // store userid, and jwt
+      const { jwt, user } = registerRes.data;
+
+      // update user with firstName, lastName
+      axios.put(
+        `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/users/${user.id}`,
+        {
+          firstName: loginData.firstName,
+          lastName: loginData.lastName,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
+      );
+
+      // Step 3: Login the user
+      const res = await signIn("credentials", {
+        redirect: false,
+        ...loginData,
+      });
+
+
+      if (res?.ok) {
+        toast.success("Login Successfully.");
+        router.push("/dashboard");
+        console.log(res);
+      } else {
+        toast.error(res?.error || "Login Failed.");
+        console.log(res);
+      }
+
+    } catch (error) {
+      toast.error("Registration failed. Please try again");
+    } finally {
+      setIsLoading(false);
     }
+
+
 
     // end
     setIsLoading(false);
@@ -73,38 +112,26 @@ export function RegisterForm({ className, ...props }) {
                 </p>
               </div>
               <div className="grid gap-3">
-                <Label htmlFor="username">Username</Label>
+                <Label htmlFor="firstName">First Name</Label>
                 <Input
                   onChange={handleChange}
-                  name="text"
-                  value={loginData.username}
-                  id="text"
-                  type="text"
-                  placeholder="johndoe45"
-                  required
-                />
-              </div>
-              <div className="grid gap-3">
-                <Label htmlFor="username">FirstName</Label>
-                <Input
-                  onChange={handleChange}
-                  name="text"
+                  name="firstName"
                   value={loginData.firstName}
-                  id="text"
+                  id="firstName"
                   type="text"
-                  placeholder="john"
+                  placeholder="e.g. John"
                   required
                 />
               </div>
               <div className="grid gap-3">
-                <Label htmlFor="username">LastName</Label>
+                <Label htmlFor="lastName">Last Name</Label>
                 <Input
                   onChange={handleChange}
-                  name="text"
+                  name="lastName"
                   value={loginData.lastName}
-                  id="text"
+                  id="lastName"
                   type="text"
-                  placeholder="doe"
+                  placeholder="e.g. Doe"
                   required
                 />
               </div>
@@ -139,7 +166,7 @@ export function RegisterForm({ className, ...props }) {
               <div className="text-center text-sm">
                 Already have an account?{" "}
                 <a href="/login" className="underline underline-offset-4">
-                  Sign in
+                  Login
                 </a>
               </div>
             </div>
