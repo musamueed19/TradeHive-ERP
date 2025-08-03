@@ -137,7 +137,7 @@ export const sidebarItems = {
   navSecondary: [
     {
       title: "Settings",
-      url: "#",
+      url: "/dashboard/settings",
       icon: IconSettings,
     },
     /*
