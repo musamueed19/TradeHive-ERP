@@ -22,7 +22,10 @@ import { useSession } from "next-auth/react";
 
 export function AppSidebar({ ...props }) {
   const { data: session } = useSession();
-  const userData = { ...session?.user, avatar: "/avatars/shadcn.jpg" };
+  const userData = {
+    ...session?.user,
+    // avatar: "/avatars/shadcn.jpg"
+  };
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>

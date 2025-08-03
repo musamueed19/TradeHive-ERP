@@ -13,8 +13,8 @@ const DashboardLayout = ({ children }) => {
 
   if (status === "loading") {
     return (
-      <Loader2 className="animate-spin size-14 h-screen mx-auto" />
-      // <Loading loading={true} />
+      
+      <Loading standardLoader={true}/>
     )
   }
   if (status === "unauthenticated") {
