@@ -18,7 +18,7 @@ const page = () => {
         {/* CTA */}
         <div className="flex flex-col sm:flex-row justify-center gap-6">
           <Link href={"/login"} className="px-8 py-3 font-semibold text-lg rounded-full text-primary-foreground hover:text-white bg-primary hover:bg-green-800 transition duration-200 shadow-lg" >Login</Link>
-          <Link href={"/login"} className="px-8 py-3 font-semibold text-lg rounded-full text-green-300 hover:text-white hover:bg-green-900 transition duration-200 shadow-lg border-primary border-2" >Register</Link>
+          <Link href={"/register"} className="px-8 py-3 font-semibold text-lg rounded-full text-green-300 hover:text-white hover:bg-green-900 transition duration-200 shadow-lg border-primary border-2" >Register</Link>
         </div>
       </div>
     </main>

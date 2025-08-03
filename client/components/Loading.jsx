@@ -6,7 +6,7 @@ import { Loader2 } from "lucide-react";
 
 const Loading = ({ loading, standardLoader }) => {
   if (standardLoader) {
-    return <Loader2 className="animate-spin size-14 h-screen mx-auto" />;
+    return <Loader2 className="animate-spin size-14 h-[80%] m-auto" />;
   }
   return (
     <>
