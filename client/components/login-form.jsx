@@ -7,8 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export function LoginForm({ className, ...props }) {
   // router
@@ -48,7 +48,7 @@ export function LoginForm({ className, ...props }) {
       router.push("/dashboard");
       console.log(res);
     } else {
-      toast.error("Login Failed.");
+      toast.error(res?.error || "Login Failed.");
       console.log(res);
     }
 
@@ -97,7 +97,7 @@ export function LoginForm({ className, ...props }) {
                   required
                 />
               </div>
-              <Button type="submit" className="w-full" disbaled={isLoading}>
+              <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? "Logging in..." : "Login"}
               </Button>
               {/* <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">

@@ -33,8 +33,10 @@ const handler = NextAuth({
 
         // now get res
         const data = await res.json();
+        // console.log(res, '---------DATA---------', data)
+        // console.log(res.ok, data?.jwt)
 
-        if (!res.ok || data.jwt) {
+        if (!res?.ok || !data?.jwt) {
           throw new Error(data?.error?.message || "Login failed");
         }
 

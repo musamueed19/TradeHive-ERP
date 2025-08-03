@@ -1,14 +1,12 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import {
-  IconInnerShadowTop,
-} from "@tabler/icons-react"
+import * as React from "react";
+import { IconInnerShadowTop } from "@tabler/icons-react";
 
-import { NavDocuments } from "@/components/nav-documents"
-import { NavMain } from "@/components/nav-main"
-import { NavSecondary } from "@/components/nav-secondary"
-import { NavUser } from "@/components/nav-user"
+import { NavDocuments } from "@/components/nav-documents";
+import { NavMain } from "@/components/nav-main";
+import { NavSecondary } from "@/components/nav-secondary";
+import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -17,19 +15,23 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
-import { sidebarItems as data } from "@/constants/sidebar"
+import { sidebarItems as data } from "@/constants/sidebar";
+import { useSession } from "next-auth/react";
 
-export function AppSidebar({
-  ...props
-}) {
+export function AppSidebar({ ...props }) {
+  const { data: session } = useSession();
+  const userData = { ...session?.user, avatar: "/avatars/shadcn.jpg" };
   return (
-    (<Sidebar collapsible="offcanvas" {...props}>
+    <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:!p-1.5">
+            <SidebarMenuButton
+              asChild
+              className="data-[slot=sidebar-menu-button]:!p-1.5"
+            >
               <a href="/dashboard">
                 <IconInnerShadowTop className="!size-5" />
                 <span className="text-base font-semibold">Trade Hive.</span>
@@ -44,8 +46,8 @@ export function AppSidebar({
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        {session?.user && <NavUser user={userData} />}
       </SidebarFooter>
-    </Sidebar>)
+    </Sidebar>
   );
 }
