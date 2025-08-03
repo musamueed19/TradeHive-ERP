@@ -49,7 +49,7 @@ export const sidebarItems = {
     },
     {
       title: "Sales",
-      url: "/dashboard/products",
+      url: "/dashboard/sales",
       icon: IconShoppingCart,
     },
 
@@ -156,17 +156,17 @@ export const sidebarItems = {
   documents: [
     {
       name: "Today",
-      url: "#",
+      url: "/dashboard/reports/sales/today",
       icon: IconCalendar,
     },
     {
       name: "Weekly",
-      url: "#",
+      url: "/dashboard/reports/sales/weekly",
       icon: IconCalendarWeek,
     },
     {
       name: "Monthly",
-      url: "#",
+      url: "/dashboard/reports/sales/monthly",
       icon: IconCalendarMonth,
     },
     /*

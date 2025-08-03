@@ -1,6 +1,11 @@
-"use client"
+"use client";
 
-import { IconDots, IconFolder, IconShare3, IconTrash } from "@tabler/icons-react";
+import {
+  IconDots,
+  IconFolder,
+  IconShare3,
+  IconTrash,
+} from "@tabler/icons-react";
 
 import {
   DropdownMenu,
@@ -8,7 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -17,15 +22,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+import Link from "next/link";
 
-export function NavDocuments({
-  items
-}) {
-  const { isMobile } = useSidebar()
+export function NavDocuments({ items }) {
+  const { isMobile } = useSidebar();
 
   return (
-    (<SidebarGroup className="group-data-[collapsible=icon]:hidden">
+    <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Sale Reports</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
@@ -66,13 +70,15 @@ export function NavDocuments({
             </DropdownMenu> */}
           </SidebarMenuItem>
         ))}
-        <SidebarMenuItem>
-          <SidebarMenuButton className="text-sidebar-foreground/70">
-            <IconDots className="text-sidebar-foreground/70" />
-            <span>More</span>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
+        <Link href={'/dashboard/reports/sales'}>
+          <SidebarMenuItem>
+            <SidebarMenuButton className="text-sidebar-foreground/70">
+              <IconDots className="text-sidebar-foreground/70" />
+              <span>More</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </Link>
       </SidebarMenu>
-    </SidebarGroup>)
+    </SidebarGroup>
   );
 }
